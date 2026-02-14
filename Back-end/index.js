@@ -14,12 +14,23 @@ connectDb();
 const app = express();
 app.use(express.json())
 app.use(cookieParser());
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://blog-frontend.vercel.app'
+].filter(Boolean);
+
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://blog-frontend.vercel.app"
-    ],
-    credentials: true
+    origin: function (origin, callback) {
+        // allow requests with no origin (like curl, Postman)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            return callback(null, true);
+        }
+        return callback(new Error('CORS policy: Origin not allowed'));
+    },
+    credentials: true,
 }));
 app.get("/", (req, res) => {
     res.send("Backend is running 🚀");

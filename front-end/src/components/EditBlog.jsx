@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API } from '../api';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -11,7 +12,7 @@ const EditBlog = () => {
 
     const fetchBlog = async () => {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`http://localhost:8282/blogs/getBlog/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+        const res = await axios.get(`${API}/blogs/getBlog/${id}`, { headers: { Authorization: `Bearer ${token}` } });
         settitle(res.data.blog.title);
         setdescription(res.data.blog.description);
     }
@@ -21,7 +22,7 @@ const EditBlog = () => {
     const handleUpdate = async () => {
         const token = localStorage.getItem("token");
 
-        const res = await axios.post("http://localhost:8282/blogs/updateBlogs", 
+        const res = await axios.post(`${API}/blogs/updateBlogs`, 
             { blogId: id, title, description }, 
             { headers: { Authorization: `Bearer ${token}` } });
         if (res.status === 200) {

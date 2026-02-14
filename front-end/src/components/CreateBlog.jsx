@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { API } from "../api";
 
 function CreateBlog() {
   const [title, setTitle] = useState("");
@@ -15,7 +16,7 @@ function CreateBlog() {
     }
 
     try {
-      const res = await axios.post("http://localhost:8282/blogs/createBlogs", {title, description}, {headers:{Authorization:`Bearer ${token}`}});
+      const res = await axios.post(`${API}/blogs/createBlogs`, {title, description}, {headers:{Authorization:`Bearer ${token}`}});
       if(res.status === 201 || res.status === 200){
         alert("Blog created successfully");
         setTitle("");

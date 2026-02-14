@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Navbar from './Navbar'
 import EditCard from './EditBlogCard'
 import axios from 'axios'
+import { API } from '../api'
 
 const MyBlogs = () => {
   const [myBlogs, setBlogs] = useState([])
@@ -10,7 +11,7 @@ const MyBlogs = () => {
   try {
     const token = localStorage.getItem("token")
 
-    const res = await axios.get("http://localhost:8282/blogs/getMyBlogs",
+    const res = await axios.get(`${API}/blogs/getMyBlogs`,
       {
         headers: {
           Authorization: `Bearer ${token}`,   

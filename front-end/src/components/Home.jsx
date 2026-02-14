@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import TitleCard from './ShowblogCard'
 import axios from 'axios';
+import { API } from '../api';
 import { FaSearch } from "react-icons/fa";
 import {Link} from "react-router-dom";
 
@@ -16,12 +17,12 @@ const Home = () => {
   const handleSearch = async (e) => {
     const token = localStorage.getItem("token");
 
-    const res = await axios.get("http://localhost:8282/blogs/searchBlogs?query=" + search, { headers: { Authorization: `Bearer ${token}` } });
+    const res = await axios.get(`${API}/blogs/searchBlogs?query=` + encodeURIComponent(search), { headers: { Authorization: `Bearer ${token}` } });
     setblogs(res.data.blogs);
   }
   const fetchData = async () => {
     const token = localStorage.getItem("token");
-    const res = await axios.get(`http://localhost:8282/blogs/getallblogs?page=${currentPage}`, 
+    const res = await axios.get(`${API}/blogs/getallblogs?page=${currentPage}`, 
       { headers: { 
         Authorization: `Bearer ${token}` } });
     if (res.status === 200) {

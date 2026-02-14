@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { API } from "../api";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -20,7 +21,7 @@ export default function Register() {
     }
 
     try {
-      const res = await axios.post("http://localhost:8282/users/register",{username,email,password,role}, {withCredentials: true});
+      const res = await axios.post(`${API}/users/register`,{username,email,password,role}, {withCredentials: true});
       if(res.status === 201){
         alert("Registration successful! Please login");
         setusername("");

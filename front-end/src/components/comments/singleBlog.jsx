@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { API } from "../../api";
 
 const SingleBlog = () => {
     const token = localStorage.getItem("token");
@@ -22,7 +23,7 @@ const SingleBlog = () => {
     const fetchBlog = async () => {
         try {
             const res = await axios.get(
-                `http://localhost:8282/blogs/getblog/${id}`,
+                `${API}/blogs/getblog/${id}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setBlog(res.data.blog);
@@ -36,7 +37,7 @@ const SingleBlog = () => {
         try {
             setLoading(true);
             const res = await axios.get(
-                `http://localhost:8282/comments/getComments/${id}`,
+                `${API}/comments/getComments/${id}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setComments(res.data.comments);
@@ -59,7 +60,7 @@ const SingleBlog = () => {
 
         try {
             await axios.post(
-                `http://localhost:8282/comments`,
+                `${API}/comments`,
                 { text: newComment, blogId: id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
